@@ -10,13 +10,15 @@ import {
     Param} from '@nestjs/common';
 import { CreateDtoItem } from './Dto/create.item.dto';
 import {Request, Response} from 'express'
+import { ItemsService } from './items.service';
 
 @Controller('items')
 export class ItemsController {
+    constructor(private readonly itemServices: ItemsService){}
 
     @Get()
     findAll(){
-        return "get all items"
+        return this.itemServices.findAll();
     }
 
     // using req and res opject in express but not the best way to use nest js.
