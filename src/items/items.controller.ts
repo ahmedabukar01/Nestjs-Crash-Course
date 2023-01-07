@@ -48,12 +48,12 @@ export class ItemsController {
         return this.itemServices.createItem(createItems)
     }
 
-    // @Put(':id')
-    // updateItem(@Body() updateItemDto: CreateDtoItem, @Param('id') id): string{
-    //     return `ID: ${id}, Name: ${updateItemDto.name}`
-    // }
-    // @Delete(':id')
-    // delete(@Param('id') id): string{
-    //     return `Deleted Id: ${id}`
-    // }
+    @Put(':id')
+    updateItem(@Body() updateItemDto: CreateDtoItem, @Param('id') id): Promise<Item>{
+        return this.itemServices.UpdateItem(id,updateItemDto)
+    }
+    @Delete(':id')
+    delete(@Param('id') id): Promise<Item>{
+        return this.itemServices.DeleteItem(id)
+    }
 }

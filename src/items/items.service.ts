@@ -16,11 +16,15 @@ export class ItemsService {
     }
 
     async createItem(item: Item): Promise<Item>{
-        const newItem = new this.itemModel(item);
-        return await newItem.save()
+        // const newItem = new this.itemModel(item);
+        // return await newItem.save()
+        return await this.itemModel.create(item)
+    }
+    async UpdateItem(id: string, item: Item): Promise<Item>{
+        return await this.itemModel.findByIdAndUpdate(id, item,{new: true})
+    }
+    async DeleteItem(id: string): Promise<Item>{
+        return await this.itemModel.findByIdAndDelete({_id: id})
     }
 
-    // async updateItem(id: string, data): Promise<item[]>{
-    //     return await this.itemModel.findByIdAndUpdate({id},)
-    // }
 }
