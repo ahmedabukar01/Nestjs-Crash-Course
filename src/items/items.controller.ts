@@ -11,14 +11,15 @@ import {
 import { CreateDtoItem } from './Dto/create.item.dto';
 import {Request, Response} from 'express'
 import { ItemsService } from './items.service';
+import { Item } from './interfaces/items.interface';
 
 @Controller('items')
 export class ItemsController {
     constructor(private readonly itemServices: ItemsService){}
 
     @Get()
-    findAll(){
-        return this.itemServices.findAll();
+    async findAll(){
+        return this.itemServices.findAll()
     }
 
     // using req and res opject in express but not the best way to use nest js.
@@ -38,21 +39,21 @@ export class ItemsController {
     // }
 
     @Get(':id')
-    findOne(@Param('id') id): string{
-        return `item: ${id}`
+    async findOne(@Param('id') id): Promise<Item[]>{
+        return this.itemServices.findOne(id)
     }
 
     @Post()
-    create(@Body() createItems: CreateDtoItem): string {
-        return `Name: ${createItems.name} Desc: ${createItems.description} Qty: ${createItems.qty}`;
+    async create(@Body() createItems: CreateDtoItem): Promise<Item> {
+        return this.itemServices.createItem(createItems)
     }
 
-    @Put(':id')
-    updateItem(@Body() updateItemDto: CreateDtoItem, @Param('id') id): string{
-        return `ID: ${id}, Name: ${updateItemDto.name}`
-    }
-    @Delete(':id')
-    delete(@Param('id') id): string{
-        return `Deleted Id: ${id}`
-    }
+    // @Put(':id')
+    // updateItem(@Body() updateItemDto: CreateDtoItem, @Param('id') id): string{
+    //     return `ID: ${id}, Name: ${updateItemDto.name}`
+    // }
+    // @Delete(':id')
+    // delete(@Param('id') id): string{
+    //     return `Deleted Id: ${id}`
+    // }
 }
